@@ -9,6 +9,6 @@ export MTI_HOME=/opt/intelFPGA/22.2/questa_fse
 export VERILATOR_HOME=/usr/share/verilator
 export VERILATOR_SRC=$VERILATOR_HOME/include
 
-export RISCV_HOME=/opt/riscv
+export RISCV_HOME=/opt/rv32im
 
 export PATH=$MTI_HOME/bin:$RISCV_HOME/bin:$PATH
