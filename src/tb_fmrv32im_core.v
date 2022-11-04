@@ -9,7 +9,7 @@ module tb_fmrv32im_core;
    reg [31:0] INTERRUPT;
 
    // Write Address Channel
-   wire [15:0] IM_AXI_AWADDR;
+   wire [31:0] IM_AXI_AWADDR;
    wire [3:0]  IM_AXI_AWCACHE;
    wire [2:0]  IM_AXI_AWPROT;
    wire        IM_AXI_AWVALID;
@@ -27,7 +27,7 @@ module tb_fmrv32im_core;
    wire [1:0]  IM_AXI_BRESP;
 
    // Read Address Channel
-   wire [15:0] IM_AXI_ARADDR;
+   wire [31:0] IM_AXI_ARADDR;
    wire [3:0]  IM_AXI_ARCACHE;
    wire [2:0]  IM_AXI_ARPROT;
    wire        IM_AXI_ARVALID;
@@ -160,7 +160,8 @@ module tb_fmrv32im_core;
 
    fmrv32im_core 
     #(
-      .MEM_FILE ("../../../../src/imem.hex")
+      //.MEM_FILE ("../../../../src/imem.hex")
+      .MEM_FILE ("imem.hex")
     )
     u_fmrv32im_core
      (
