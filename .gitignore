@@ -1,0 +1,6 @@
+build/
+imem.hex
+transcript
+vsim.log
+vsim.wlf
+*.o
