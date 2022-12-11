@@ -1,0 +1,7 @@
+{
+    "verilog.linting.linter": "verilator",
+    "verilog.linting.verilator.arguments": "--timing -Wall -f filelist.f",
+    "verilog.logging.enabled": true,
+    "verilog.linting.path": "/opt/verilator-v5.002/bin/",
+    "verilog.linting.verilator.runAtFileLocation": false
+}
