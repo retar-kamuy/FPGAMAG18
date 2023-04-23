@@ -20,7 +20,7 @@ fmrv32im_artya7_wrapper u_fmrv32im_artya7_wrapper
   .GPIO_ot(gpio_ot),
   .UART_rx(uart_txd_in),
   .UART_tx(uart_rxd_out),
-  .gpio_i(gpio_i),
-  .gpio_o(gpio_o)
+  .GPIO_i(gpio_i),
+  .GPIO_o(gpio_o)
 );
 endmodule

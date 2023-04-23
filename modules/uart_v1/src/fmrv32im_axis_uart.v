@@ -482,7 +482,7 @@ module uartcon_top
    end
    assign wempty = tx_empty_reg;
 
-   uartcon_clk #
+   uartcon_clk
      #(
        .RESET_COUNT(RESET_COUNT)
      )
