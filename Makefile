@@ -30,18 +30,27 @@ WLF			= vsim.wlf
 # Rules
 #
 all: run
-build: $(BUILD_DIR)/$(OPT_DESIGN)
+#build: $(BUILD_DIR)/$(OPT_DESIGN)
 
 $(BUILD_DIR):
 	vlib $(BUILD_DIR)
 	vmap $(BUILD_DIR) $(BUILD_DIR)
 
-$(BUILD_DIR)/$(OPT_DESIGN) : $(SRCS) $(TESTS)
-	vlog $(VFLAGS) $^ -work $(BUILD_DIR)
-	vopt $(VOPT_FLAGS) $(TOP) -work $(BUILD_DIR) -o $(OPT_DESIGN)
+# $(BUILD_DIR)/$(OPT_DESIGN) : $(SRCS) $(TESTS)
+#	vlog $(VFLAGS) $^ -work $(BUILD_DIR)
+#	vopt $(VOPT_FLAGS) $(TOP) -work $(BUILD_DIR) -o $(OPT_DESIGN)
 
-run: $(BUILD_DIR)/$(OPT_DESIGN)
-	vsim $(BUILD_DIR).$(OPT_DESIGN) -c -wlf $(WLF) -do $(TRANSCRIPT) -l vsim.log
+compile : $(SRCS) $(TESTS)
+	vlib $(BUILD_DIR)
+	vmap $(BUILD_DIR) $(BUILD_DIR)
+	vlog $(VFLAGS) $^ -work $(BUILD_DIR)
+
+# run: $(BUILD_DIR)/$(OPT_DESIGN)
+#	vsim $(BUILD_DIR).$(OPT_DESIGN) -c -wlf $(WLF) -do $(TRANSCRIPT) -l vsim.log
+
+run: compile
+	vsim -work $(BUILD_DIR) -c -wlf $(WLF) -do $(TRANSCRIPT) -l vsim.log $(TOP)
 
 clean:
-	rm -rf $(BUILD_DIR) vsim.log $(WLF) modelsim.ini
+#	rm -rf $(BUILD_DIR) vsim.log $(WLF) modelsim.ini
+	del /q $(BUILD_DIR) vsim.log $(WLF) modelsim.ini
