@@ -637,12 +637,19 @@ module fmrv32im
    wire [31:0] sw_interrupt_pc;
 
 //   assign exception_break = id_inst_ecall | id_inst_ebreak;
-   assign exception_break = (cpu_state == S_MEMORY) & ex_inst_ebreak;
+   // assign exception_break = (cpu_state == S_MEMORY) & ex_inst_ebreak;
+   assign exception_break = (cpu_state == S_MEMORY) & (id_inst_ecall | ex_inst_ebreak);
    assign exception       = (cpu_state == S_MEMORY) & (
                              I_MEM_BADMEM_EXCPT | D_MEM_BADMEM_EXCPT |
                              (id_ill_inst & ~I_MEM_WAIT) | exception_break);
-   assign exception_code  = {7'd0, D_MEM_BADMEM_EXCPT,
-                             exception_break, id_ill_inst, 1'b0, I_MEM_BADMEM_EXCPT};
+   // assign exception_code  = {7'd0, D_MEM_BADMEM_EXCPT,
+   //                           exception_break, id_ill_inst, 1'b0, I_MEM_BADMEM_EXCPT};
+   assign exception_code = ex_inst_ecall ? 12'd11
+                           : D_MEM_BADMEM_EXCPT ? 12'd4
+                           : exception_break    ? 12'd3
+                           : id_ill_inst        ? 12'd2
+                           : I_MEM_BADMEM_EXCPT ? 12'd0
+                           : 12'd0;
    assign exception_addr  = I_MEM_ADDR;
    assign exception_pc    = pc;
    assign sw_interrupt    = (cpu_state == S_MEMORY) & ex_inst_ecall;
