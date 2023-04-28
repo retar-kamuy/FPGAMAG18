@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run ctags",
+            "label": "ctags",
             "type": "shell",
             "command": "ctags --languages=SystemVerilog --langmap=SystemVerilog:+.v --langmap=SystemVerilog:+.vh -R -f tags",
             "windows": {
@@ -17,6 +17,14 @@
             "runOptions": {
                 "runOn": "folderOpen"
             }
+        },
+        {
+            "label": "pip freeze",
+            "type": "shell",
+            "command": "pip freeze > requirements.txt",
+            "windows": {
+                "command": ".venv\\Scripts\\pip.exe freeze > requirements.txt"
+            },
         }
     ]
 }

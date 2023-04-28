@@ -9,3 +9,7 @@ modelsim.ini
 *.do
 
 tags
+
+.venv/
+
+vunit_out/

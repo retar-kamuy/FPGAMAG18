@@ -198,8 +198,8 @@ if( INTEL == 0 ) begin
    end
 	assign D_MEM_RDATA = D_MEM_rdata_out;
 
-   initial $readmemh(MEM_FILE, imem, 0, 1023);
-   initial $readmemh(MEM_FILE, dmem, 0, 1023);
+   // initial $readmemh(MEM_FILE, imem, 0, 1023);
+   // initial $readmemh(MEM_FILE, dmem, 0, 1023);
 end else begin
   // for Intel FPGA
 	fmrv32im_intel_cram

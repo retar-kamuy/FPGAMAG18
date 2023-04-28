@@ -1,0 +1,2 @@
+colorama==0.4.6
+vunit-hdl==4.7.0

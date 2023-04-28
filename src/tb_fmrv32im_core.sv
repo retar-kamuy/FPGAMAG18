@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
-module tb_fmrv32im_core;
+`include "vunit_defines.svh"
 
-   reg sim_end;
+module tb_fmrv32im_core;
+   localparam MEM_FILE = "imem.hex";
 
    reg RST_N;
    reg CLK;
@@ -95,23 +96,6 @@ module tb_fmrv32im_core;
    wire        MM_AXI_RVALID;
    wire        MM_AXI_RREADY;
 
-   initial begin
-      sim_end = 1'b0;
-
-      RST_N = 1'b0;
-      CLK   = 1'b0;
-
-      INTERRUPT = 0;
-
-      #100;
-
-      @(posedge CLK);
-      RST_N = 1'b1;
-      $display("============================================================");
-      $display("Simulatin Start");
-      $display("============================================================");
-   end
-
    // Clock
    localparam CLK100M = 10;
    always begin
@@ -128,39 +112,45 @@ module tb_fmrv32im_core;
    end
    
    // Sinario
-   initial begin
-      wait(CLK);
+   `TEST_SUITE begin
+      `TEST_SUITE_SETUP begin
+         RST_N = 1'b0;
+         CLK   = 1'b0;
 
-      @(posedge CLK);
+         INTERRUPT = 0;
 
-      $display("============================================================");
-      $display("Process Start");
-      $display("============================================================");
+         @(posedge CLK);
+         RST_N = 1'b1;
+         $display("============================================================");
+         $display("Simulatin Start");
+         $display("============================================================");
+      end
+      `TEST_CASE("rv32ui-p-add") begin
+         localparam MEM_FILE = "rv32ui-p-add.hex";
+         $readmemh(MEM_FILE, u_fmrv32im_core.u_fmrv32im_cache.imem, 0, 1023);
+         $readmemh(MEM_FILE, u_fmrv32im_core.u_fmrv32im_cache.dmem, 0, 1023);
+         @(posedge CLK);
 
-      wait((u_fmrv32im_core.dbus_addr == 32'h0000_0800) & 
-	   (u_fmrv32im_core.dbus_wstb == 4'hF));
+         $display("============================================================");
+         $display("Process Start");
+         $display("============================================================");
+
+         wait((u_fmrv32im_core.dbus_addr == 32'h0000_0800) & 
+	      (u_fmrv32im_core.dbus_wstb == 4'hF));
 	
-      repeat(10) @(posedge CLK);
-      sim_end = 1;
+         repeat(10) @(posedge CLK);
+      end
+
+      `TEST_SUITE_CLEANUP begin
+         $display("============================================================");
+         $display("Simulatin Finish");
+         $display("============================================================");
+         $display("Result: %8x\n", rslt);
+      end
    end
-
-
-   initial begin
-      wait(sim_end);
-      $display("============================================================");
-      $display("Simulatin Finish");
-      $display("============================================================");
-      $display("Result: %8x\n", rslt);
-      
-      $finish();
-   end
-
-//   initial $readmemh("../../../../src/imem.hex", u_fmrv32im_core.u_fmrv32im_cache.imem);
-//   initial $readmemh("../../../../src/imem.hex", u_fmrv32im_core.u_fmrv32im_cache.dmem);
 
    fmrv32im_core 
     #(
-      //.MEM_FILE ("../../../../src/imem.hex")
       .MEM_FILE ("imem.hex")
     )
     u_fmrv32im_core
