@@ -26,7 +26,7 @@ VU = VUnit.from_argv(compile_builtins=False)
 VU.add_verilog_builtins()
 
 lib = VU.add_library('lib')
-lib.add_source_file('fmrv32im_core.sv')
+lib.add_source_file(Path('src') / 'fmrv32im_core.sv')
 lib.add_source_files(SRC_PATH / '*.v')
 lib.add_source_files(SRC_PATH / '*.sv')
 
