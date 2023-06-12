@@ -1,13 +1,3 @@
-build/
-imem.hex
-transcript
-vsim.log
-vsim.wlf
-*.o
-
-modelsim.ini
-*.do
-
 tags
 
 .venv/
