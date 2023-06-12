@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `include "vunit_defines.svh"
 
-module tb_fmrv32im_core;
+module tb;
     reg RST_N;
     reg CLK;
 
