@@ -3,8 +3,6 @@ import shutil
 from pathlib import Path
 from vunit import VUnit
 
-regexp = r'(\_[0-9a-z]+)$'
-
 def pre_config(output_path):
     cwd = Path(output_path).parent / '..' / 'modelsim'
     basename = os.path.basename(output_path).split('.')[-1]
