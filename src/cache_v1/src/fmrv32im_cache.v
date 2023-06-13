@@ -190,10 +190,22 @@ if( INTEL == 0 ) begin
    end
 	assign WR_REQ_MEM_WDATA = WR_REQ_MEM_WDATA_out;
    always @(posedge CLK) begin
-      if(~D_MEM_miss & D_MEM_WSTB[0]) dmem[D_MEM_ADDR[11:2]][7:0]   <= D_MEM_WDATA[7:0];
-      if(~D_MEM_miss & D_MEM_WSTB[1]) dmem[D_MEM_ADDR[11:2]][15:8]  <= D_MEM_WDATA[15:8];
-      if(~D_MEM_miss & D_MEM_WSTB[2]) dmem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
-      if(~D_MEM_miss & D_MEM_WSTB[3]) dmem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
+      if(~D_MEM_miss & D_MEM_WSTB[0]) begin
+         dmem[D_MEM_ADDR[11:2]][7:0] <= D_MEM_WDATA[7:0];
+         imem[D_MEM_ADDR[11:2]][7:0] <= D_MEM_WDATA[7:0];
+      end
+      if(~D_MEM_miss & D_MEM_WSTB[1]) begin
+         dmem[D_MEM_ADDR[11:2]][15:8] <= D_MEM_WDATA[15:8];
+         imem[D_MEM_ADDR[11:2]][15:8] <= D_MEM_WDATA[15:8];
+      end
+      if(~D_MEM_miss & D_MEM_WSTB[2]) begin
+         dmem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
+         imem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
+      end
+      if(~D_MEM_miss & D_MEM_WSTB[3]) begin
+         dmem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
+         imem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
+      end
       D_MEM_rdata_out <= dmem[D_MEM_ADDR[11:2]];
    end
 	assign D_MEM_RDATA = D_MEM_rdata_out;
