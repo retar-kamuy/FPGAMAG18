@@ -175,7 +175,14 @@ if( INTEL == 0 ) begin
    // I-Cache Memory
 	reg [31:0] I_MEM_rdata_out;
    always @(posedge CLK) begin
-      if(!channel & RD_REQ_MEM_WE) imem[mem_addr] <= RD_REQ_MEM_RDATA;
+      if(!channel & RD_REQ_MEM_WE)
+         imem[mem_addr] <= RD_REQ_MEM_RDATA;
+      else begin
+         if(~D_MEM_miss & D_MEM_WSTB[0]) imem[D_MEM_ADDR[11:2]][7:0]   <= D_MEM_WDATA[7:0];
+         if(~D_MEM_miss & D_MEM_WSTB[1]) imem[D_MEM_ADDR[11:2]][15:8]  <= D_MEM_WDATA[15:8];
+         if(~D_MEM_miss & D_MEM_WSTB[2]) imem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
+         if(~D_MEM_miss & D_MEM_WSTB[3]) imem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
+      end
    end
    always @(posedge CLK) begin
       I_MEM_rdata_out <= imem[I_MEM_ADDR[11:2]];
@@ -190,22 +197,10 @@ if( INTEL == 0 ) begin
    end
 	assign WR_REQ_MEM_WDATA = WR_REQ_MEM_WDATA_out;
    always @(posedge CLK) begin
-      if(~D_MEM_miss & D_MEM_WSTB[0]) begin
-         dmem[D_MEM_ADDR[11:2]][7:0] <= D_MEM_WDATA[7:0];
-         imem[D_MEM_ADDR[11:2]][7:0] <= D_MEM_WDATA[7:0];
-      end
-      if(~D_MEM_miss & D_MEM_WSTB[1]) begin
-         dmem[D_MEM_ADDR[11:2]][15:8] <= D_MEM_WDATA[15:8];
-         imem[D_MEM_ADDR[11:2]][15:8] <= D_MEM_WDATA[15:8];
-      end
-      if(~D_MEM_miss & D_MEM_WSTB[2]) begin
-         dmem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
-         imem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
-      end
-      if(~D_MEM_miss & D_MEM_WSTB[3]) begin
-         dmem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
-         imem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
-      end
+      if(~D_MEM_miss & D_MEM_WSTB[0]) dmem[D_MEM_ADDR[11:2]][7:0]   <= D_MEM_WDATA[7:0];
+      if(~D_MEM_miss & D_MEM_WSTB[1]) dmem[D_MEM_ADDR[11:2]][15:8]  <= D_MEM_WDATA[15:8];
+      if(~D_MEM_miss & D_MEM_WSTB[2]) dmem[D_MEM_ADDR[11:2]][23:16] <= D_MEM_WDATA[23:16];
+      if(~D_MEM_miss & D_MEM_WSTB[3]) dmem[D_MEM_ADDR[11:2]][31:24] <= D_MEM_WDATA[31:24];
       D_MEM_rdata_out <= dmem[D_MEM_ADDR[11:2]];
    end
 	assign D_MEM_RDATA = D_MEM_rdata_out;
