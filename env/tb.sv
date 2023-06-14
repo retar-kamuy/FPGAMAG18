@@ -13,7 +13,6 @@ module tb;
   // --------------------------------------------------
   // AXI4 Interface(Master)
   // --------------------------------------------------
-
   // Master Write Address
   logic [0:0]   MM_AXI_AWID     ;
   logic [31:0]  MM_AXI_AWADDR   ;
@@ -27,7 +26,6 @@ module tb;
   logic [0:0]   MM_AXI_AWUSER   ;
   logic         MM_AXI_AWVALID  ;
   logic         MM_AXI_AWREADY  ;
-
   // Master Write Data
   logic [31:0]  MM_AXI_WDATA    ;
   logic [3:0]   MM_AXI_WSTRB    ;
@@ -35,14 +33,12 @@ module tb;
   logic [0:0]   MM_AXI_WUSER    ;
   logic         MM_AXI_WVALID   ;
   logic         MM_AXI_WREADY   ;
-
   // Master Write Response
   logic [0:0]   MM_AXI_BID      ;
   logic [1:0]   MM_AXI_BRESP    ;
   logic [0:0]   MM_AXI_BUSER    ;
   logic         MM_AXI_BVALID   ;
   logic         MM_AXI_BREADY   ;
-
   // Master Read Address
   logic [0:0]   MM_AXI_ARID     ;
   logic [31:0]  MM_AXI_ARADDR   ;
@@ -56,7 +52,6 @@ module tb;
   logic [0:0]   MM_AXI_ARUSER   ;
   logic         MM_AXI_ARVALID  ;
   logic         MM_AXI_ARREADY  ;
-
   // Master Read Data
   logic [0:0]   MM_AXI_RID      ;
   logic [31:0]  MM_AXI_RDATA    ;
