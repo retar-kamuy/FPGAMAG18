@@ -72,15 +72,15 @@ module fmrv32im_plic
       case(BUS_ADDR)
         4'h0:
           begin
-             BUS_RDATA <= int_reg;
+             BUS_RDATA = int_reg;
           end
         4'h1:
           begin
-             BUS_RDATA <= int_mask;
+             BUS_RDATA = int_mask;
           end
         default:
           begin
-             BUS_RDATA <= 32'd0;
+             BUS_RDATA = 32'd0;
           end
       endcase
    end

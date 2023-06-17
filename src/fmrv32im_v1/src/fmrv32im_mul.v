@@ -30,14 +30,14 @@ module fmrv32im_mul
 
    always @(*) begin
       if(inst_rs1_signed) begin
-         w_rs1 <= $signed(RS1);
+         w_rs1 = $signed(RS1);
       end else begin
-         w_rs1 <= $unsigned(RS1);
+         w_rs1 = $unsigned(RS1);
       end
       if(inst_rs2_signed) begin
-         w_rs2 <= $signed(RS2);
+         w_rs2 = $signed(RS2);
       end else begin
-         w_rs2 <= $unsigned(RS2);
+         w_rs2 = $unsigned(RS2);
       end
    end
 

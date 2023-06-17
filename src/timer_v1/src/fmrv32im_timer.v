@@ -35,15 +35,15 @@ module fmrv32im_timer
       case(BUS_ADDR)
         4'h0:
           begin
-             BUS_RDATA <= counter;
+             BUS_RDATA = counter;
           end
         4'h1:
           begin
-             BUS_RDATA <= mask;
+             BUS_RDATA = mask;
           end
         default:
           begin
-             BUS_RDATA <= 32'd0;
+             BUS_RDATA = 32'd0;
           end
       endcase
    end

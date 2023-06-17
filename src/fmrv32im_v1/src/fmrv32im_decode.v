@@ -83,18 +83,18 @@ module fmrv32im_decode
    reg 		     r_type, i_type, s_type, b_type, u_type, j_type;
 	 reg         c0_type; // custom0
    always @(*) begin
-      r_type <= (INST_CODE[6:5] == 2'b01) && (INST_CODE[4:2] == 3'b100);
-      i_type <= ((INST_CODE[6:5] == 2'b00) && ((INST_CODE[4:2] == 3'b000) ||
+      r_type = (INST_CODE[6:5] == 2'b01) && (INST_CODE[4:2] == 3'b100);
+      i_type = ((INST_CODE[6:5] == 2'b00) && ((INST_CODE[4:2] == 3'b000) ||
 					       (INST_CODE[4:2] == 3'b011) ||
 					       (INST_CODE[4:2] == 3'b100))) ||
 		((INST_CODE[6:5] == 2'b11) && ((INST_CODE[4:2] == 3'b001) ||
 					       (INST_CODE[4:2] == 3'b100)));
-      s_type <= (INST_CODE[6:5] == 2'b01) && (INST_CODE[4:2] == 3'b000);
-      b_type <= (INST_CODE[6:5] == 2'b11) && (INST_CODE[4:2] == 3'b000);
-      u_type <= ((INST_CODE[6:5] == 2'b00) || (INST_CODE[6:5] == 2'b01)) &&
+      s_type = (INST_CODE[6:5] == 2'b01) && (INST_CODE[4:2] == 3'b000);
+      b_type = (INST_CODE[6:5] == 2'b11) && (INST_CODE[4:2] == 3'b000);
+      u_type = ((INST_CODE[6:5] == 2'b00) || (INST_CODE[6:5] == 2'b01)) &&
 		(INST_CODE[4:2] == 3'b101);
-      j_type <= (INST_CODE[6:5] == 2'b11) && (INST_CODE[4:2] == 3'b011);
-			c0_type <= (INST_CODE[6:5] == 2'b00) && (INST_CODE[4:2] == 3'b010);
+      j_type = (INST_CODE[6:5] == 2'b11) && (INST_CODE[4:2] == 3'b011);
+			c0_type = (INST_CODE[6:5] == 2'b00) && (INST_CODE[4:2] == 3'b010);
    end
 
    // イミデート生成

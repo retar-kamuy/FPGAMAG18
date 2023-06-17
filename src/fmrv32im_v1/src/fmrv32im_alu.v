@@ -56,7 +56,7 @@ module fmrv32im_alu
 	*/
    reg [31:0] 		 reg_op2;
    always @(*) begin
-	  reg_op2 <= (INST_ADDI | INST_SLTI | INST_SLTIU |
+	  reg_op2 = (INST_ADDI | INST_SLTI | INST_SLTIU |
 				  INST_XORI | INST_ANDI | INST_ORI |
 				  INST_SLLI | INST_SRLI | INST_SRAI |
 				  INST_LB | INST_LH | INST_LW | INST_LBU | INST_LHU |
@@ -68,15 +68,15 @@ module fmrv32im_alu
    reg 	   alu_eq, alu_ltu, alu_lts;
 
    always @(*) begin
-	  alu_add_sub <= (INST_SUB)?(RS1 - reg_op2):(RS1 + reg_op2);
-	  alu_shl     <= RS1 << reg_op2[4:0];
-	  alu_shr     <= $signed({(INST_SRA | INST_SRAI)?RS1[31]:1'b0, RS1}) >>> reg_op2[4:0];
-	  alu_eq      <= (RS1 == reg_op2);
-	  alu_lts     <= ($signed(RS1) < $signed(reg_op2));
-	  alu_ltu     <= (RS1 < reg_op2);
-	  alu_xor     <= RS1 ^ reg_op2;
-	  alu_or      <= RS1 | reg_op2;
-	  alu_and     <= RS1 & reg_op2;
+	  alu_add_sub = (INST_SUB)?(RS1 - reg_op2):(RS1 + reg_op2);
+	  alu_shl     = RS1 << reg_op2[4:0];
+	  alu_shr     = $signed({(INST_SRA | INST_SRAI)?RS1[31]:1'b0, RS1}) >>> reg_op2[4:0];
+	  alu_eq      = (RS1 == reg_op2);
+	  alu_lts     = ($signed(RS1) < $signed(reg_op2));
+	  alu_ltu     = (RS1 < reg_op2);
+	  alu_xor     = RS1 ^ reg_op2;
+	  alu_or      = RS1 | reg_op2;
+	  alu_and     = RS1 & reg_op2;
    end // always @ (posedge CLK)
 
    always @(posedge CLK) begin
