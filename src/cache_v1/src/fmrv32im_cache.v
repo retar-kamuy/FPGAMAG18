@@ -248,4 +248,37 @@ end else begin
 end
 endgenerate
 
+`ifdef verilator
+  //-------------------------------------------------------------
+  // set_imem: Write byte into memory
+  //-------------------------------------------------------------
+  export "DPI-C" task set_imem;
+  task set_imem (int addr, int data);
+     $info("addr=0x%x, data=0x%x\n", addr, data);
+     imem[addr] = data;
+  endtask
+  //-------------------------------------------------------------
+  // set_dmem: Write byte into memory
+  //-------------------------------------------------------------
+  export "DPI-C" task set_dmem;
+  task set_dmem (int addr, int data);
+     $info("addr=0x%x, data=0x%x\n", addr, data);
+     dmem[addr] = data;
+  endtask
+   //-------------------------------------------------------------
+   // read: Read byte from memory
+   //-------------------------------------------------------------
+   // function [7:0] read; /*verilator public*/
+   //     input [31:0] addr;
+   // begin
+   //     case (addr[1:0])
+   //     2'd0: read = u_ram.ram[addr/4][7:0];
+   //     2'd1: read = u_ram.ram[addr/4][15:8];
+   //     2'd2: read = u_ram.ram[addr/4][23:16];
+   //     2'd3: read = u_ram.ram[addr/4][31:24];
+   //     endcase
+   // end
+   // endfunction
+`endif   // verilator
+
 endmodule

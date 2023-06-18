@@ -1,6 +1,8 @@
+#include <fstream>
+#include <iostream>
 #include <gtest/gtest.h>
-
 #include <systemc>
+
 #include "Vtb_top.h"
 #include "verilated_vcd_sc.h"
 #include "tb.hpp"
@@ -38,13 +40,32 @@ class SystemCFixture : public testing::Test {
     };
 };
 
+#define BUF_SIZE 1024
+
 TEST_F(SystemCFixture, test1) {
+    std::ifstream ifs("env/tests/rv32ui-p-add.hex");
+    int buf_size = BUF_SIZE;
+    char str[BUF_SIZE];
+    if (ifs.fail()) {
+        std::cerr << "Failed to open file." << std::endl;
+        ASSERT_TRUE(false);
+    }
+
+    int addr = 0;
+    svSetScope(svGetScopeFromName(
+        "top.Vtb_top.tb_top.u_fmrv32im_core.u_fmrv32im_cache"));
+    // Verilated::scopesDump();
+    while (ifs.getline(str, buf_size)) {
+        Vtb_top::set_imem(addr, std::stol(str, nullptr, 16));
+        Vtb_top::set_dmem(addr, std::stol(str, nullptr, 16));
+        addr += 4;
+    }
+
     while (!Verilated::gotFinish()) {
         sc_start(1, SC_NS);
     }
     std::cout << "Success Result: " << top->dut->rslt << std::endl;
     ASSERT_EQ(1, top->dut->rslt);
-    // sc_start(-1, SC_NS);
 }
 
 int sc_main(int argc, char** argv) {
