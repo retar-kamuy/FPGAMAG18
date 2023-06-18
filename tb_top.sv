@@ -79,40 +79,32 @@ module tb_top (input clk, output logic [31:0] rslt);
     $info("Process Start");
   endtask
 
-  // Sinario
+  // Scenario
   initial begin
-    $info("Running test suite setup code");
-    rst_n   = 0;
-    RXD     = 0;
-    GPIO_I  = 0;
+    forever begin
+      $info("Running test suite setup code");
+      rst_n   = 0;
+      RXD     = 0;
+      GPIO_I  = 0;
+      rslt    = 0;
 
-    $info("Running test case setup code");
-    repeat(5) @(posedge clk);
-    rst_n = 1;
-    $info("Simulation Start");
+      $info("Running test case setup code");
+      repeat(5) @(posedge clk);
+      rst_n = 1;
+      $info("Simulation Start");
 
-    // load_elf("rv32ui-p-add.hex");
-    // $info("Load ELF: Simulatin Start %s\n", "rv32ui-p-add.hex");
-    // $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.imem, 0, 1023);
-    // $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.dmem, 0, 1023);
+      repeat(5) @(posedge clk);
+      $info("Process Start");
 
-    repeat(5) @(posedge clk);
-    $info("Process Start");
-
-    wait(
-      (u_fmrv32im_core.dbus_addr === 32'h0000_0800) &
-      (u_fmrv32im_core.dbus_wstb === 4'hF)
-    );
-    rslt = u_fmrv32im_core.dbus_wdata;
-    repeat(10) @(posedge clk);
-
-    $info("Simulatin Finish");
-    // assert(rslt === 1)
-    //   $info("Success Result: %8x\n", rslt);
-    // else
-    //   $fatal("Error Result: %8x\n", rslt);
-
-    $finish;
+      wait(
+        (u_fmrv32im_core.dbus_addr === 32'h0000_0800) &
+        (u_fmrv32im_core.dbus_wstb === 4'hF)
+      );
+      $info("Simulatin Finish");
+      rslt = u_fmrv32im_core.dbus_wdata;
+      repeat(10) @(posedge clk);
+      // $finish;
+    end
   end
 
   fmrv32im_core u_fmrv32im_core (

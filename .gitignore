@@ -6,3 +6,4 @@ tags
 build
 *.vcd
 V*
+result.xml
