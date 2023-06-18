@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/verilator-5.012/include",
+                "/opt/verilator-5.012/include/**",
                 "/opt/systemc-2.3.3/include",
                 "/opt/googletest-1.13.0/include"
             ],

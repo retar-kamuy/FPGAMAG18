@@ -92,9 +92,9 @@ module tb_top (input clk, output logic [31:0] rslt);
     $info("Simulation Start");
 
     // load_elf("rv32ui-p-add.hex");
-    $info("Load ELF: Simulatin Start %s\n", "rv32ui-p-add.hex");
-    $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.imem, 0, 1023);
-    $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.dmem, 0, 1023);
+    // $info("Load ELF: Simulatin Start %s\n", "rv32ui-p-add.hex");
+    // $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.imem, 0, 1023);
+    // $readmemh("env/tests/rv32ui-p-add.hex", u_fmrv32im_core.u_fmrv32im_cache.dmem, 0, 1023);
 
     repeat(5) @(posedge clk);
     $info("Process Start");

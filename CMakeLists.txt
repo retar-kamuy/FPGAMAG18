@@ -19,7 +19,7 @@ set(dut
     ./src/fmrv32im_core.sv
     ./src/axilm_v1/src/fmrv32im_axilm.v
     ./src/axim_v1/src/fmrv32im_axim.v
-    ./src/cache_v1/src/fmrv32im_cache.v
+    ./src/cache_v1/src/fmrv32im_cache.sv
     ./src/dbussel_v1/src/fmrv32im_dbussel.v
     ./src/fmrv32im_v1/src/fmrv32im.v
     ./src/fmrv32im_v1/src/fmrv32im_alu.v

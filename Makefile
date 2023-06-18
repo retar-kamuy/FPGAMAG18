@@ -10,7 +10,7 @@ DUT = tb_top
 
 # Variables: Lists of objects, source and deps
 #
-
+GTEST_OUTPUT = result.xml
 
 # Rules
 #
@@ -33,18 +33,19 @@ test_verilator:
 	cmake -B $(BUILD_DIR) -DVERILATOR_ARGS=--trace -GNinja .
 	ninja -C $(BUILD_DIR)
 	mv $(BUILD_DIR)/V$(DUT) V$(DUT)
-	./V$(DUT)
+	./V$(DUT) --gtest_output=xml:$(GTEST_OUTPUT)
 
 .PHONY : test_verilator_vcd
 test_verilator_vcd:
 	cmake -B $(BUILD_DIR) -DVERILATOR_ARGS=--trace -GNinja .
 	ninja -C $(BUILD_DIR)
 	mv $(BUILD_DIR)/V$(DUT) V$(DUT)
-	./V$(DUT) +trace
+	./V$(DUT) +trace --gtest_output=xml:$(GTEST_OUTPUT)
 
 .PHONY : clean
 clean:
 	rm -rf vunit_out
+	rm -rf V$(DUT) *.vcd $(GTEST_OUTPUT)
 
 .PHONY : distclean
 distclean: clean
