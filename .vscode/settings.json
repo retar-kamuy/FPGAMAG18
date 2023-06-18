@@ -4,5 +4,11 @@
     "verilog.linting.slang.arguments": "",
     "verilog.linting.path": "/opt/verilator-v5.002/bin/",
     "verilog.linting.verilator.runAtFileLocation": false,
-    "verilog.linting.slang.useWSL": true
+    "verilog.linting.slang.useWSL": true,
+    "files.associations": {
+        "*.jison": "bnf",
+        "algorithm": "cpp",
+        "cmath": "cpp"
+    },
+    "cpplint.cpplintPath": "/home/ubuntu/.local/bin/cpplint"
 }

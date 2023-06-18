@@ -1,5 +1,8 @@
-tags
-
 .venv/
 
 vunit_out/
+
+tags
+build
+*.vcd
+V*

@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.14)
 
 project(fmrv32im_core)
 
-set(CMAKE_CC_COMPILER "/usr/bin/clang")
-set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+# set(CMAKE_CC_COMPILER "/usr/bin/clang")
+# set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 
 set(target Vtb_top)
 
@@ -33,11 +33,12 @@ set(dut
     ./src/uart_v1/src/fmrv32im_axis_uart.v  
 )
 
+set(VERILATOR_ARGS CACHE STRING "")
+
 verilate(${target}
     SYSTEMC
     SOURCES ${dut}
-    TRACE
-    VERILATOR_ARGS --Wno-lint --timing -LDFLAGS "-L/opt/googletest-1.13.0/lib -lgtest -lpthread"
+    VERILATOR_ARGS --Wno-lint ${VERILATOR_ARGS} --timing -LDFLAGS "-L/opt/googletest-1.13.0/lib -lgtest -lpthread"
 )
 
 verilator_link_systemc(${target})

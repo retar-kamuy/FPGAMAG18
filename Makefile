@@ -5,7 +5,8 @@ PYTHON = .venv\Scripts\python
 
 # Variables: Verilog
 #
-
+BUILD_DIR = build
+DUT = tb_top
 
 # Variables: Lists of objects, source and deps
 #
@@ -27,22 +28,24 @@ build:
 test:
 	$(PYTHON) run.py
 
+.PHONY : test_verilator
+test_verilator:
+	cmake -B $(BUILD_DIR) -DVERILATOR_ARGS=--trace -GNinja .
+	ninja -C $(BUILD_DIR)
+	mv $(BUILD_DIR)/V$(DUT) V$(DUT)
+	./V$(DUT)
+
+.PHONY : test_verilator_vcd
+test_verilator_vcd:
+	cmake -B $(BUILD_DIR) -DVERILATOR_ARGS=--trace -GNinja .
+	ninja -C $(BUILD_DIR)
+	mv $(BUILD_DIR)/V$(DUT) V$(DUT)
+	./V$(DUT) +trace
+
 .PHONY : clean
 clean:
-ifeq ("$(wildcard vunit_out)", "vunit_out")
-	rd /s /q vunit_out
-endif
+	rm -rf vunit_out
 
 .PHONY : distclean
 distclean: clean
-ifeq ("$(wildcard .venv)", ".venv")
-	rd /s /q .venv
-endif
-
-.PHONY : verilator
-verilator:
-	mkdir build
-	cd build
-	cmake -GNinja ..
-	ninja
-	./Vtb_top
+	rm -rf build

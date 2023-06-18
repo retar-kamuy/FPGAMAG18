@@ -26,10 +26,6 @@ class SystemCFixture : public testing::Test {
             top->dut->trace(tfp, 99);
             tfp->open("wave.vcd");
         }
-
-        while (!Verilated::gotFinish()) {
-            sc_start(1, SC_NS);
-        }
     };
 
     void TearDown() override {
@@ -43,11 +39,17 @@ class SystemCFixture : public testing::Test {
 };
 
 TEST_F(SystemCFixture, test1) {
-    sc_start(-1, SC_NS);
+    while (!Verilated::gotFinish()) {
+        sc_start(1, SC_NS);
+    }
+    std::cout << "Success Result: " << top->dut->rslt << std::endl;
+    ASSERT_EQ(1, top->dut->rslt);
+    // sc_start(-1, SC_NS);
 }
 
 int sc_main(int argc, char** argv) {
-    printf("Built with %s %s.\n", Verilated::productName(), Verilated::productVersion());
+    printf("Built with %s %s.\n",
+        Verilated::productName(), Verilated::productVersion());
     printf("Recommended: Verilator 4.0 or later.\n");
     Verilated::commandArgs(argc, argv);
 
