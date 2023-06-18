@@ -55,9 +55,9 @@ class SystemCFixture : public testing::Test {
         svSetScope(svGetScopeFromName(
             "top.Vtb_top.tb_top.u_fmrv32im_core.u_fmrv32im_cache"));
         // Verilated::scopesDump();
-        std::cout << "path: " << path << std::endl;
         Vtb_top::set_imem(path.c_str());
         Vtb_top::set_dmem(path.c_str());
+        std::cout << "Process Start" << std::endl;
     }
 
     void run(void) {

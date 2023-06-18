@@ -76,7 +76,7 @@ module tb;
     $readmemh(path, u_fmrv32im_core.u_fmrv32im_cache.imem, 0, 1023);
     $readmemh(path, u_fmrv32im_core.u_fmrv32im_cache.dmem, 0, 1023);
 
-    @(posedge clk);
+    repeat(5) @(posedge clk);
     $info("Process Start");
   endtask
 
@@ -91,7 +91,7 @@ module tb;
 
     `TEST_CASE_SETUP begin
       $info("Running test case setup code");
-      @(posedge clk);
+      repeat(5) @(posedge clk);
       rst_n = 1;
       $info("Simulation Start");
     end

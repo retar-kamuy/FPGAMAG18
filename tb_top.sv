@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
-module tb_top (input clk, output logic [31:0] rslt);
+module tb_top (output logic [31:0] rslt);
   logic         rst_n   ;
-  // logic         clk = 0 ;
+  logic         clk     ;
   logic         RXD     ;
   logic         TXD     ;
   logic [31:0]  GPIO_I  ;
@@ -63,12 +63,12 @@ module tb_top (input clk, output logic [31:0] rslt);
   // logic [31:0]  rslt            ;
 
   // Clock
-  // localparam CLK100M = 10ns;
-  // initial begin
-  //   clk = 0;
-  //   forever
-  //     #(CLK100M / 2) clk = ~clk;
-  // end
+  localparam CLK100M = 10ns;
+  initial begin
+    clk = 0;
+    forever
+      #(CLK100M / 2) clk = ~clk;
+  end
 
   task load_elf(input string path);
     $info("Load ELF: Simulatin Start %s\n", path);
@@ -79,22 +79,35 @@ module tb_top (input clk, output logic [31:0] rslt);
     $info("Process Start");
   endtask
 
+  task test_suite_setup();
+    $info("Running test suite setup code");
+    rst_n   = 0;
+    RXD     = 0;
+    GPIO_I  = 0;
+    rslt    = 0;
+  endtask
+
+  task test_case_setup();
+    $info("Running test case setup code");
+    repeat(5) @(posedge clk);
+    rst_n = 1;
+    $info("Simulation Start");
+  endtask
+
+  task test_case_cleanup();
+    wait(
+      (u_fmrv32im_core.dbus_addr === 32'h0000_0800) &
+      (u_fmrv32im_core.dbus_wstb === 4'hF)
+    );
+    rslt <= u_fmrv32im_core.dbus_wdata;
+  endtask
+
   // Scenario
   initial begin
     forever begin
-      $info("Running test suite setup code");
-      rst_n   = 0;
-      RXD     = 0;
-      GPIO_I  = 0;
-      rslt    = 0;
+      test_suite_setup();
 
-      $info("Running test case setup code");
-      repeat(5) @(posedge clk);
-      rst_n = 1;
-      $info("Simulation Start");
-
-      repeat(5) @(posedge clk);
-      $info("Process Start");
+      test_case_setup();
 
       wait(
         (u_fmrv32im_core.dbus_addr === 32'h0000_0800) &
